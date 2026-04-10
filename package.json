@@ -1,0 +1,9 @@
+{
+  "name": "task-manager-assignment",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Small full-stack task manager built for the assignment brief.",
+  "scripts": {
+    "start": "node server.js"
+  }
+}
