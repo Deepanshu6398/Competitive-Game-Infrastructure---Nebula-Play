@@ -1,0 +1,1067 @@
+{
+  "brand": {
+    "name": "Solstice Roast",
+    "shortName": "Solstice",
+    "tagline": "Specialty coffee built for focused mornings.",
+    "description": "Premium coffee, cold brew, and ritual tools for design-conscious professionals who want cafe-grade mornings at home.",
+    "niche": "Premium specialty coffee and ritual tools",
+    "targetCustomer": "Design-conscious professionals ages 26 to 45 who care about flavor, visual detail, and a smoother daily routine.",
+    "voice": "Warm, premium, quietly confident",
+    "fonts": {
+      "heading": "Fraunces",
+      "body": "Manrope"
+    },
+    "palette": [
+      {
+        "name": "Midnight Roast",
+        "hex": "#1b1511",
+        "usage": "Primary color for dominant surfaces, footer, and premium contrast."
+      },
+      {
+        "name": "Oat Milk",
+        "hex": "#f4ecdf",
+        "usage": "Secondary color for the full-page background and soft panels."
+      },
+      {
+        "name": "Copper Glow",
+        "hex": "#ba6f3c",
+        "usage": "Accent color for buttons, offers, labels, and highlights."
+      }
+    ],
+    "contactEmail": "hello@solsticeroast.com",
+    "contactPhone": "+1 (646) 555-0129",
+    "storePassword": "Test@123"
+  },
+  "announcements": [
+    "Free shipping on orders over $75.",
+    "Subscribe to core coffee bags and save 10 percent on every roast drop.",
+    "Starter Ritual bundle saves 18 percent this week."
+  ],
+  "navigation": [
+    {
+      "label": "Home",
+      "href": "/index.html",
+      "pages": ["home"]
+    },
+    {
+      "label": "Shop",
+      "href": "/catalog.html",
+      "pages": ["catalog", "product", "cart", "checkout"]
+    },
+    {
+      "label": "About",
+      "href": "/about.html",
+      "pages": ["about"]
+    },
+    {
+      "label": "FAQ",
+      "href": "/faq.html",
+      "pages": ["faq", "shipping", "privacy", "terms", "track-order"]
+    },
+    {
+      "label": "Contact",
+      "href": "/contact.html",
+      "pages": ["contact"]
+    }
+  ],
+  "footerMenus": [
+    {
+      "title": "Shop",
+      "items": [
+        { "label": "Catalog", "href": "/catalog.html" },
+        { "label": "Best Sellers", "href": "/catalog.html?collection=signature-beans" },
+        { "label": "Brew Tools", "href": "/catalog.html?collection=brew-tools" },
+        { "label": "Fast Rituals", "href": "/catalog.html?collection=fast-rituals" }
+      ]
+    },
+    {
+      "title": "Company",
+      "items": [
+        { "label": "About Us", "href": "/about.html" },
+        { "label": "Contact", "href": "/contact.html" },
+        { "label": "Track Order", "href": "/track-order.html" }
+      ]
+    },
+    {
+      "title": "Support",
+      "items": [
+        { "label": "FAQ", "href": "/faq.html" },
+        { "label": "Shipping and Returns", "href": "/shipping.html" },
+        { "label": "Privacy Policy", "href": "/privacy.html" },
+        { "label": "Terms of Service", "href": "/terms.html" }
+      ]
+    }
+  ],
+  "hero": {
+    "eyebrow": "Premium specialty coffee | Small-batch roasted",
+    "title": "Cafe-grade mornings, built for real homes.",
+    "subtitle": "Solstice Roast blends traceable coffee, fast-ready concentrates, and sculptural brew tools into a polished store concept designed to feel premium, reliable, and ready to sell.",
+    "primaryCta": {
+      "label": "Shop Best Sellers",
+      "href": "/catalog.html"
+    },
+    "secondaryCta": {
+      "label": "Explore the Story",
+      "href": "/about.html"
+    },
+    "stats": [
+      {
+        "value": "48 hr",
+        "label": "Roast-to-ship window for core coffee drops"
+      },
+      {
+        "value": "4.9 / 5",
+        "label": "Average customer rating across the hero collection"
+      },
+      {
+        "value": "$75+",
+        "label": "Free shipping threshold for most domestic orders"
+      },
+      {
+        "value": "10%",
+        "label": "Subscription savings on recurring coffee bags"
+      }
+    ],
+    "floatingCards": [
+      {
+        "title": "Starter Ritual Bundle",
+        "body": "Eclipse Blend, Dawn Kit, and Studio Canister grouped as a clean first-purchase offer.",
+        "price": "$108",
+        "compareAt": "$132"
+      },
+      {
+        "title": "Designed for repeat orders",
+        "body": "Clear shipping policy, fast restock paths, and subscription-ready best sellers."
+      }
+    ],
+    "image": "/assets/hero-scene.svg"
+  },
+  "pages": {
+    "catalog": {
+      "eyebrow": "Shop all",
+      "title": "Build a better morning ritual.",
+      "description": "Coffee, tools, and quick routines curated for focus, speed, and premium shelf presence.",
+      "seoTitle": "Shop All | Solstice Roast",
+      "seoDescription": "Browse Solstice Roast coffee, cold brew, decaf, and ritual tools."
+    },
+    "about": {
+      "eyebrow": "About the brand",
+      "title": "A premium coffee brand with the calm of a design studio.",
+      "description": "Built around focused mornings, honest sourcing, and a visual system that feels ready for a real storefront.",
+      "seoTitle": "About | Solstice Roast",
+      "seoDescription": "Learn the Solstice Roast brand story, palette, customer profile, and design standards."
+    },
+    "contact": {
+      "eyebrow": "Contact us",
+      "title": "Support that feels as polished as the storefront.",
+      "description": "Reach out for subscriptions, gifting, wholesale questions, or order help.",
+      "seoTitle": "Contact | Solstice Roast",
+      "seoDescription": "Contact Solstice Roast for support, gifting, and wholesale."
+    },
+    "faq": {
+      "eyebrow": "Common questions",
+      "title": "Everything a careful customer would want to know before checkout.",
+      "description": "Freshness, subscriptions, shipping, decaf, and brewing answers in one place.",
+      "seoTitle": "FAQ | Solstice Roast",
+      "seoDescription": "Frequently asked questions about Solstice Roast products, shipping, and subscriptions."
+    },
+    "shipping": {
+      "eyebrow": "Shipping and returns",
+      "title": "Clear timelines. Fresh roasts. No hidden policy surprises.",
+      "description": "The shipping page is designed to reduce hesitation and make fulfillment expectations easy to trust.",
+      "seoTitle": "Shipping and Returns | Solstice Roast",
+      "seoDescription": "Read Solstice Roast shipping, freshness, and return guidelines."
+    },
+    "privacy": {
+      "eyebrow": "Privacy policy",
+      "title": "Respectful data handling for a modern direct-to-consumer store.",
+      "description": "A concise privacy policy page that feels real instead of placeholder.",
+      "seoTitle": "Privacy Policy | Solstice Roast",
+      "seoDescription": "Privacy policy for Solstice Roast."
+    },
+    "terms": {
+      "eyebrow": "Terms of service",
+      "title": "Store terms presented with the same clarity as the rest of the brand.",
+      "description": "Simple legal language covering orders, product use, subscriptions, and customer obligations.",
+      "seoTitle": "Terms of Service | Solstice Roast",
+      "seoDescription": "Terms of service for Solstice Roast."
+    },
+    "trackOrder": {
+      "eyebrow": "Track order",
+      "title": "Customers should never have to guess what happens after checkout.",
+      "description": "This page turns order tracking into a clean, reassuring touchpoint in the customer journey.",
+      "seoTitle": "Track Order | Solstice Roast",
+      "seoDescription": "Track demo Solstice Roast orders with a clean status timeline."
+    },
+    "cart": {
+      "eyebrow": "Your cart",
+      "title": "A calm checkout start, not a cluttered interruption.",
+      "description": "Cart summaries, trust notes, and shipping logic are visible before the final purchase step.",
+      "seoTitle": "Cart | Solstice Roast",
+      "seoDescription": "Review your Solstice Roast cart."
+    },
+    "checkout": {
+      "eyebrow": "Secure checkout",
+      "title": "A demo checkout flow that still feels trustworthy and complete.",
+      "description": "Built to show the full journey from product page to order confirmation.",
+      "seoTitle": "Checkout | Solstice Roast",
+      "seoDescription": "Demo checkout experience for Solstice Roast."
+    }
+  },
+  "collections": [
+    {
+      "id": "signature-beans",
+      "slug": "signature-beans",
+      "name": "Signature Beans",
+      "description": "Balanced daily coffees and single-origin releases roasted for detail and repeat drinkability.",
+      "image": "/assets/products/eclipse-blend.svg",
+      "accent": "Copper-forward",
+      "productIds": [
+        "eclipse-house-blend",
+        "atlas-single-origin",
+        "nightfall-decaf-capsules"
+      ]
+    },
+    {
+      "id": "brew-tools",
+      "slug": "brew-tools",
+      "name": "Brew Tools",
+      "description": "Countertop-friendly tools that make a home setup feel more intentional and giftable.",
+      "image": "/assets/products/dawn-pour-over-kit.svg",
+      "accent": "Soft sculptural neutrals",
+      "productIds": [
+        "dawn-pour-over-kit",
+        "studio-espresso-canister"
+      ]
+    },
+    {
+      "id": "fast-rituals",
+      "slug": "fast-rituals",
+      "name": "Fast Rituals",
+      "description": "Speed-driven products for office mornings, late starts, and polished grab-and-go routines.",
+      "image": "/assets/products/ember-concentrate.svg",
+      "accent": "High convenience, same premium tone",
+      "productIds": [
+        "ember-concentrate",
+        "nightfall-decaf-capsules"
+      ]
+    }
+  ],
+  "home": {
+    "benefits": [
+      {
+        "title": "Traceable coffee, roasted twice weekly",
+        "body": "Fresh inventory windows help the store feel premium, current, and trustworthy."
+      },
+      {
+        "title": "Conversion-ready merchandising",
+        "body": "Best sellers, bundles, labels, reviews, and FAQ coverage all reduce friction before checkout."
+      },
+      {
+        "title": "Design-led counter appeal",
+        "body": "The tools are selected to look as good on a kitchen shelf as they perform in use."
+      },
+      {
+        "title": "Fast ritual formats",
+        "body": "Concentrate and capsules widen the store from hobby coffee buyers to busy repeat customers."
+      }
+    ],
+    "highlights": [
+      {
+        "title": "Starter Ritual",
+        "body": "Pair Eclipse House Blend with the Dawn Pour-Over Kit and Studio Canister for a first-order bundle that feels useful, giftable, and high-value.",
+        "ctaLabel": "Shop the tools",
+        "ctaHref": "/catalog.html?collection=brew-tools"
+      },
+      {
+        "title": "Office Fridge Favorite",
+        "body": "Ember Concentrate gives the catalog a convenience-led SKU for fast mornings, warm climates, and team gifting scenarios.",
+        "ctaLabel": "See fast rituals",
+        "ctaHref": "/catalog.html?collection=fast-rituals"
+      },
+      {
+        "title": "Subscription Anchor",
+        "body": "Eclipse House Blend is positioned as the dependable repeat-purchase product that can power retention and monthly recurring revenue.",
+        "ctaLabel": "View best seller",
+        "ctaHref": "/product.html?slug=eclipse-house-blend"
+      }
+    ],
+    "bundle": {
+      "eyebrow": "Bundle feature",
+      "title": "A first-order bundle with a clean reason to convert.",
+      "description": "The Starter Ritual combines one everyday bag, one sculptural brewer, and one storage piece. It creates a stronger average order value without feeling pushy.",
+      "items": [
+        "Eclipse House Blend",
+        "Dawn Pour-Over Kit",
+        "Studio Espresso Canister"
+      ],
+      "price": "$108",
+      "compareAt": "$132",
+      "ctaLabel": "Build your routine",
+      "ctaHref": "/catalog.html"
+    },
+    "testimonials": [
+      {
+        "name": "Maya R.",
+        "location": "Brooklyn, NY",
+        "quote": "The store feels like it understands both taste and time. I can order coffee, add a tool, and trust the experience from start to finish."
+      },
+      {
+        "name": "Daniel K.",
+        "location": "Austin, TX",
+        "quote": "Eclipse became our house coffee in one week. The tasting notes are real, the packaging looks sharp, and shipping updates were cleaner than most coffee brands."
+      },
+      {
+        "name": "Leah T.",
+        "location": "Chicago, IL",
+        "quote": "I came for the brew kit and ended up adding concentrate too. The product page answered every hesitation before I had to ask."
+      }
+    ],
+    "trustBadges": [
+      "Free shipping over $75",
+      "Secure checkout flow",
+      "Roasted in micro-batches",
+      "30-day tool returns",
+      "4.9 average rating",
+      "Subscription skip or pause any time"
+    ],
+    "newsletter": {
+      "title": "Get the next roast drop, launch, and bundle before it sells through.",
+      "body": "Subscribers get first access to limited beans, curated routine bundles, and new countertop tools.",
+      "buttonLabel": "Join the list"
+    }
+  },
+  "about": {
+    "story": [
+      "Solstice Roast was imagined for people who want their home coffee routine to feel as intentional as the rest of their space. The brand sits between specialty coffee culture and design-led home goods, so the storefront needs to convert like commerce while still carrying editorial calm.",
+      "The product mix is deliberately broad enough to support repeat behavior: dependable coffee bags, convenience-driven formats, and a small tool collection that raises average order value without making the catalog feel noisy."
+    ],
+    "values": [
+      {
+        "title": "Traceable sourcing",
+        "body": "Coffee is chosen for flavor clarity, dependable quality, and origin stories that feel honest instead of exaggerated."
+      },
+      {
+        "title": "Fresh roast rhythm",
+        "body": "Twice-weekly roasting gives the store a believable operational cadence customers can understand."
+      },
+      {
+        "title": "Object quality",
+        "body": "Tools are selected as countertop objects, not just accessories buried in a navigation menu."
+      },
+      {
+        "title": "Clear policy design",
+        "body": "Shipping, returns, privacy, and support are written plainly so the experience feels market ready."
+      }
+    ],
+    "journey": [
+      {
+        "title": "Source",
+        "body": "Blend the catalog around one dependable best seller, one premium single-origin, and one convenience-led ritual format."
+      },
+      {
+        "title": "Roast",
+        "body": "Present freshness windows, tasting notes, and roast style clearly so every product feels shoppable."
+      },
+      {
+        "title": "Ship",
+        "body": "Use trust copy, order tracking, and a clean cart to make the store feel ready for real customers."
+      }
+    ],
+    "standards": [
+      {
+        "label": "Niche",
+        "value": "Premium specialty coffee and ritual tools"
+      },
+      {
+        "label": "Target customer",
+        "value": "Urban professionals who want cafe quality without clutter"
+      },
+      {
+        "label": "Brand voice",
+        "value": "Warm, premium, quietly confident"
+      },
+      {
+        "label": "Font pairing",
+        "value": "Fraunces for headings and Manrope for body copy"
+      }
+    ]
+  },
+  "contact": {
+    "intro": "Questions about subscriptions, gifting, wholesale, or order issues should feel easy to resolve. The contact page is built to keep support visible and trustworthy.",
+    "cards": [
+      {
+        "title": "Customer support",
+        "value": "hello@solsticeroast.com",
+        "meta": "Replies Monday to Saturday",
+        "href": "mailto:hello@solsticeroast.com"
+      },
+      {
+        "title": "Phone",
+        "value": "+1 (646) 555-0129",
+        "meta": "9 AM to 6 PM Eastern",
+        "href": "tel:+16465550129"
+      },
+      {
+        "title": "Wholesale and gifting",
+        "value": "Studio orders and curated gifting requests",
+        "meta": "Corporate boxes and hospitality supply",
+        "href": "/contact.html"
+      }
+    ],
+    "topics": [
+      "Order help",
+      "Subscription support",
+      "Wholesale inquiry",
+      "Gift concierge",
+      "General feedback"
+    ]
+  },
+  "faqs": [
+    {
+      "question": "How fresh is the coffee when it ships?",
+      "answer": "Core coffee bags roast twice each week. Most coffee orders leave within 24 hours of a roast window, so freshness language on the storefront feels specific and believable."
+    },
+    {
+      "question": "Can I subscribe and still change delivery timing?",
+      "answer": "Yes. Subscription products are positioned with a flexible promise: pause, skip, or cancel any time. That lowers hesitation without overcomplicating the product page."
+    },
+    {
+      "question": "Do you offer grind options?",
+      "answer": "For this storefront concept, whole bean is the default positioning because it reads more premium. Grind support can be added in Shopify if the final merchant wants it."
+    },
+    {
+      "question": "Are the tools gift ready?",
+      "answer": "Yes. Dawn Pour-Over Kit and Studio Espresso Canister are merchandised as giftable products with premium packaging cues and a 30-day return window."
+    },
+    {
+      "question": "How does the cold brew concentrate work?",
+      "answer": "Each bottle is designed as a quick ritual product: one part concentrate to one part water or milk over ice. It broadens the catalog beyond classic brew enthusiasts."
+    },
+    {
+      "question": "What if a coffee bag arrives damaged?",
+      "answer": "Any damaged or incorrect item is replaced quickly. The shipping page makes that clear so customers are not forced to search through legal copy."
+    },
+    {
+      "question": "Do you ship internationally?",
+      "answer": "This prototype is framed around domestic shipping first. International logic can be added later in Shopify Markets if the store launches globally."
+    },
+    {
+      "question": "Why are there only a handful of products?",
+      "answer": "The brief asks for a clear niche with 3 to 10 products. A tighter catalog often converts better because customers can understand the brand and make decisions faster."
+    }
+  ],
+  "shipping": {
+    "shippingCards": [
+      {
+        "title": "Processing",
+        "body": "Coffee ships within 24 to 48 hours of roast windows. Tools usually leave the studio within 2 business days."
+      },
+      {
+        "title": "Free shipping",
+        "body": "Orders over $75 ship free within the domestic zone. Smaller orders use a flat standard rate."
+      },
+      {
+        "title": "Returns",
+        "body": "Unused tools can be returned within 30 days. Coffee is replaced if damaged or incorrect."
+      }
+    ],
+    "notes": [
+      "Orders placed after Friday roast close may ship the next Tuesday.",
+      "Subscriptions renew automatically until paused, skipped, or canceled.",
+      "Tracking is emailed as soon as a label is created."
+    ],
+    "returns": [
+      "Unused brew tools: 30-day return window",
+      "Damaged or incorrect orders: replacement support within 7 days",
+      "Coffee products: non-returnable once opened unless quality is compromised"
+    ]
+  },
+  "policies": {
+    "privacy": [
+      {
+        "title": "Information we collect",
+        "body": "The store collects only the information needed to process demo orders, respond to customer support requests, and improve merchandising. No hidden data practices are presented."
+      },
+      {
+        "title": "How data is used",
+        "body": "Customer details are used for order confirmation, fulfillment communication, support, and optional marketing updates if the visitor subscribes."
+      },
+      {
+        "title": "Marketing preferences",
+        "body": "Newsletter opt-ins remain optional and can be changed at any time. The UI keeps consent separate from checkout behavior."
+      },
+      {
+        "title": "Retention",
+        "body": "Order and account information is stored only as long as needed for operational, legal, and support purposes."
+      }
+    ],
+    "terms": [
+      {
+        "title": "Orders",
+        "body": "Orders are accepted once payment is authorized and an order confirmation is issued. The brand may cancel clearly fraudulent or duplicate orders."
+      },
+      {
+        "title": "Product information",
+        "body": "Tasting notes, photos, and finish descriptions are presented as accurately as possible, but natural product variation may occur."
+      },
+      {
+        "title": "Subscriptions",
+        "body": "Recurring coffee subscriptions renew automatically according to the selected schedule until updated by the customer."
+      },
+      {
+        "title": "Liability",
+        "body": "The store is not responsible for misuse of brewing tools or delays caused by carrier disruption once an order is in transit."
+      }
+    ]
+  },
+  "trackOrder": {
+    "helper": "Use your order number to view current status, latest updates, and expected delivery timing.",
+    "steps": [
+      "Order confirmed",
+      "Roasting scheduled",
+      "Packed",
+      "In transit",
+      "Delivered"
+    ],
+    "sampleOrder": {
+      "number": "SR-20418",
+      "email": "guest@solstice.test",
+      "statusIndex": 3,
+      "placedOn": "April 20, 2026",
+      "eta": "April 24, 2026",
+      "items": [
+        "Eclipse House Blend - 340 g",
+        "Studio Espresso Canister - Copper Lid"
+      ],
+      "updates": [
+        {
+          "label": "Order placed",
+          "detail": "Payment approved and confirmation sent.",
+          "date": "April 20"
+        },
+        {
+          "label": "Roast scheduled",
+          "detail": "Coffee assigned to the next Tuesday production window.",
+          "date": "April 21"
+        },
+        {
+          "label": "Packed",
+          "detail": "Tools inspected, packed, and labeled for dispatch.",
+          "date": "April 22"
+        },
+        {
+          "label": "In transit",
+          "detail": "Carrier accepted the parcel and delivery is on time.",
+          "date": "April 23"
+        }
+      ]
+    }
+  },
+  "checkout": {
+    "paymentMethods": ["Visa", "Mastercard", "Amex", "Shop Pay"],
+    "support": "This is a demo checkout. No real payment is processed, but the structure is designed to feel complete and trustworthy."
+  },
+  "socialLinks": [
+    {
+      "label": "Instagram",
+      "href": "https://www.instagram.com/"
+    },
+    {
+      "label": "Pinterest",
+      "href": "https://www.pinterest.com/"
+    },
+    {
+      "label": "YouTube",
+      "href": "https://www.youtube.com/"
+    }
+  ],
+  "products": [
+    {
+      "id": "eclipse-house-blend",
+      "slug": "eclipse-house-blend",
+      "name": "Eclipse House Blend",
+      "tagline": "Chocolate truffle, blood orange, maple finish",
+      "collectionId": "signature-beans",
+      "type": "Coffee",
+      "vendor": "Solstice Roast",
+      "badges": ["Best Seller", "Subscribe and Save"],
+      "rating": 4.9,
+      "reviewCount": 187,
+      "image": "/assets/products/eclipse-blend.svg",
+      "gallery": [
+        {
+          "title": "Roast profile",
+          "body": "Medium-dark roast calibrated for sweetness, body, and a smooth daily cup."
+        },
+        {
+          "title": "Brews best in",
+          "body": "Espresso, batch brewer, moka pot, and full-bodied pour-over."
+        }
+      ],
+      "description": "Our anchor coffee bag: rich enough for milk, clean enough for black coffee, and dependable enough to become the reorder engine of the store.",
+      "benefits": [
+        "Built to please first-time customers and repeat subscribers",
+        "Sweet body with low bitterness and stable all-day drinkability",
+        "Pairs naturally with milk-based drinks and batch brewing"
+      ],
+      "specs": [
+        { "label": "Origin blend", "value": "Brazil, Colombia, Ethiopia" },
+        { "label": "Roast style", "value": "Medium-dark" },
+        { "label": "Process window", "value": "Roasted twice weekly" },
+        { "label": "Shipping note", "value": "Ships within 24 hours of roast day" }
+      ],
+      "shippingSnippet": "Freshly roasted and dispatched within 24 hours of roast release.",
+      "seoTitle": "Eclipse House Blend | Solstice Roast",
+      "seoDescription": "A premium house coffee blend with chocolate depth and an easy everyday profile.",
+      "purchaseModes": [
+        {
+          "id": "one-time",
+          "label": "One-time purchase",
+          "description": "Perfect if you are building your routine product by product.",
+          "discount": 0
+        },
+        {
+          "id": "subscribe",
+          "label": "Subscribe and save 10 percent",
+          "description": "Pause, skip, or cancel any time.",
+          "discount": 0.1
+        }
+      ],
+      "variants": [
+        {
+          "id": "eclipse-340g",
+          "label": "340 g",
+          "price": 22,
+          "compareAt": 28,
+          "sku": "SR-ECL-340",
+          "inventory": 42
+        },
+        {
+          "id": "eclipse-1kg",
+          "label": "1 kg",
+          "price": 54,
+          "compareAt": 62,
+          "sku": "SR-ECL-1000",
+          "inventory": 16
+        }
+      ],
+      "reviews": [
+        {
+          "name": "Ari",
+          "title": "Exactly the kind of daily coffee I was hoping for",
+          "body": "Balanced, rich, and easy to dial in. The product page felt honest and that gave me confidence to subscribe.",
+          "rating": 5
+        },
+        {
+          "name": "Naomi",
+          "title": "Looks premium and tastes premium",
+          "body": "This is the bag that makes the whole store feel believable. Great with milk and still clean on its own.",
+          "rating": 5
+        }
+      ],
+      "relatedIds": ["atlas-single-origin", "dawn-pour-over-kit", "studio-espresso-canister"]
+    },
+    {
+      "id": "atlas-single-origin",
+      "slug": "atlas-single-origin",
+      "name": "Atlas Single Origin Ethiopia",
+      "tagline": "Jasmine, peach, cane sugar",
+      "collectionId": "signature-beans",
+      "type": "Coffee",
+      "vendor": "Solstice Roast",
+      "badges": ["Limited Roast", "Single Origin"],
+      "rating": 4.8,
+      "reviewCount": 94,
+      "image": "/assets/products/atlas-single-origin.svg",
+      "gallery": [
+        {
+          "title": "Flavor direction",
+          "body": "Floral aromatics, peach sweetness, and a cleaner finish for slower brewing methods."
+        },
+        {
+          "title": "Best for",
+          "body": "V60, Chemex, and customers who want a premium contrast to the house blend."
+        }
+      ],
+      "description": "The elevated counterpoint to Eclipse. This single-origin release adds aspiration and specialty credibility to the catalog without overwhelming the store.",
+      "benefits": [
+        "Raises perceived expertise across the full storefront",
+        "Ideal as a second-bag upsell for enthusiasts",
+        "Supports premium storytelling with origin-led detail"
+      ],
+      "specs": [
+        { "label": "Origin", "value": "Guji, Ethiopia" },
+        { "label": "Roast style", "value": "Light-medium" },
+        { "label": "Process", "value": "Washed" },
+        { "label": "Shipping note", "value": "Small release, roasted in short runs" }
+      ],
+      "shippingSnippet": "Limited release coffee is roasted in smaller runs and may ship separately.",
+      "seoTitle": "Atlas Single Origin Ethiopia | Solstice Roast",
+      "seoDescription": "A floral single-origin Ethiopian coffee with jasmine, peach, and cane sugar notes.",
+      "purchaseModes": [
+        {
+          "id": "one-time",
+          "label": "One-time purchase",
+          "description": "Great for occasional weekend brewing or gifting.",
+          "discount": 0
+        },
+        {
+          "id": "subscribe",
+          "label": "Subscribe and save 10 percent",
+          "description": "Best for customers who want a rotating premium bag in the lineup.",
+          "discount": 0.1
+        }
+      ],
+      "variants": [
+        {
+          "id": "atlas-340g",
+          "label": "340 g",
+          "price": 26,
+          "compareAt": 32,
+          "sku": "SR-ATL-340",
+          "inventory": 28
+        },
+        {
+          "id": "atlas-1kg",
+          "label": "1 kg",
+          "price": 60,
+          "compareAt": 68,
+          "sku": "SR-ATL-1000",
+          "inventory": 9
+        }
+      ],
+      "reviews": [
+        {
+          "name": "Jon",
+          "title": "A premium second option done right",
+          "body": "Bright and floral without feeling difficult. It gives the catalog real specialty credibility.",
+          "rating": 5
+        },
+        {
+          "name": "Clara",
+          "title": "Worth the upgrade",
+          "body": "The note balance is spot on and the site made it easy to understand why this coffee costs more.",
+          "rating": 4
+        }
+      ],
+      "relatedIds": ["eclipse-house-blend", "dawn-pour-over-kit", "ember-concentrate"]
+    },
+    {
+      "id": "ember-concentrate",
+      "slug": "ember-concentrate",
+      "name": "Ember Cold Brew Concentrate",
+      "tagline": "Silky concentrate for instant iced coffee",
+      "collectionId": "fast-rituals",
+      "type": "Cold Brew",
+      "vendor": "Solstice Roast",
+      "badges": ["New", "Fast Ritual"],
+      "rating": 4.7,
+      "reviewCount": 61,
+      "image": "/assets/products/ember-concentrate.svg",
+      "gallery": [
+        {
+          "title": "Use case",
+          "body": "Keeps the catalog relevant for rushed mornings, offices, and warm-weather routines."
+        },
+        {
+          "title": "Serve suggestion",
+          "body": "Mix one part concentrate with one part water or milk over ice."
+        }
+      ],
+      "description": "A convenience-led product that broadens the store beyond classic beans. It gives customers a premium quick-serve option while still fitting the visual brand.",
+      "benefits": [
+        "Ready in seconds for office mornings and iced coffee routines",
+        "Creates a faster path into the brand for non-enthusiasts",
+        "Merchandises well in bundles and impulse add-ons"
+      ],
+      "specs": [
+        { "label": "Bottle size", "value": "750 ml" },
+        { "label": "Yield", "value": "Up to 10 iced cups" },
+        { "label": "Serving style", "value": "Dilute 1:1" },
+        { "label": "Storage", "value": "Keep refrigerated after opening" }
+      ],
+      "shippingSnippet": "Ships cold-pack ready in insulated packaging during warm weather windows.",
+      "seoTitle": "Ember Cold Brew Concentrate | Solstice Roast",
+      "seoDescription": "Fast premium cold brew concentrate designed for smooth iced coffee at home.",
+      "purchaseModes": [
+        {
+          "id": "one-time",
+          "label": "One-time purchase",
+          "description": "A fast ritual product built for immediate convenience.",
+          "discount": 0
+        }
+      ],
+      "variants": [
+        {
+          "id": "ember-original",
+          "label": "Original",
+          "price": 19,
+          "compareAt": 24,
+          "sku": "SR-EMB-ORG",
+          "inventory": 33
+        },
+        {
+          "id": "ember-cacao-orange",
+          "label": "Cacao Orange",
+          "price": 20,
+          "compareAt": 25,
+          "sku": "SR-EMB-CO",
+          "inventory": 19
+        }
+      ],
+      "reviews": [
+        {
+          "name": "Vik",
+          "title": "This made the store feel complete",
+          "body": "Not everyone wants to brew from scratch every day. This product makes the range much smarter.",
+          "rating": 5
+        },
+        {
+          "name": "Erin",
+          "title": "Excellent for summer and workdays",
+          "body": "Clean taste, beautiful bottle, and very easy to justify as a repeat buy.",
+          "rating": 4
+        }
+      ],
+      "relatedIds": ["nightfall-decaf-capsules", "eclipse-house-blend", "studio-espresso-canister"]
+    },
+    {
+      "id": "dawn-pour-over-kit",
+      "slug": "dawn-pour-over-kit",
+      "name": "Dawn Pour-Over Kit",
+      "tagline": "Ceramic dripper, glass server, and 100 filters",
+      "collectionId": "brew-tools",
+      "type": "Brew Tool",
+      "vendor": "Solstice Roast",
+      "badges": ["Gift Ready", "Bundle Favorite"],
+      "rating": 4.9,
+      "reviewCount": 72,
+      "image": "/assets/products/dawn-pour-over-kit.svg",
+      "gallery": [
+        {
+          "title": "Why it converts",
+          "body": "A tool set increases perceived brand maturity and lifts average order value."
+        },
+        {
+          "title": "Packaging",
+          "body": "Structured gift box presentation with filters included from day one."
+        }
+      ],
+      "description": "A countertop-friendly starter set that turns the store from coffee-only into a fuller home ritual brand.",
+      "benefits": [
+        "Adds giftable premium value to the catalog",
+        "Supports first-order bundles with obvious utility",
+        "Pairs naturally with both hero coffee products"
+      ],
+      "specs": [
+        { "label": "Includes", "value": "Ceramic dripper, glass server, 100 filters" },
+        { "label": "Capacity", "value": "600 ml server" },
+        { "label": "Finish", "value": "Matte exterior with polished interior" },
+        { "label": "Return note", "value": "30-day unused tool returns" }
+      ],
+      "shippingSnippet": "Packed with reinforced inserts to protect ceramic and glass components.",
+      "seoTitle": "Dawn Pour-Over Kit | Solstice Roast",
+      "seoDescription": "A premium pour-over starter kit with ceramic dripper, glass server, and filters.",
+      "purchaseModes": [
+        {
+          "id": "one-time",
+          "label": "One-time purchase",
+          "description": "Ideal for gifting or building a first home setup.",
+          "discount": 0
+        }
+      ],
+      "variants": [
+        {
+          "id": "dawn-sand",
+          "label": "Sand",
+          "price": 68,
+          "compareAt": 82,
+          "sku": "SR-DWN-SND",
+          "inventory": 21
+        },
+        {
+          "id": "dawn-graphite",
+          "label": "Graphite",
+          "price": 68,
+          "compareAt": 82,
+          "sku": "SR-DWN-GRA",
+          "inventory": 14
+        }
+      ],
+      "reviews": [
+        {
+          "name": "Olive",
+          "title": "Looks expensive, feels practical",
+          "body": "This is exactly the kind of tool set that makes a premium coffee store feel real.",
+          "rating": 5
+        },
+        {
+          "name": "Marcus",
+          "title": "Perfect with the house blend",
+          "body": "The styling is sharp and the included filters remove the extra decision-making.",
+          "rating": 5
+        }
+      ],
+      "relatedIds": ["eclipse-house-blend", "atlas-single-origin", "studio-espresso-canister"]
+    },
+    {
+      "id": "studio-espresso-canister",
+      "slug": "studio-espresso-canister",
+      "name": "Studio Espresso Canister",
+      "tagline": "Vacuum-sealed storage with sculpted finish",
+      "collectionId": "brew-tools",
+      "type": "Storage",
+      "vendor": "Solstice Roast",
+      "badges": ["Countertop Favorite"],
+      "rating": 4.8,
+      "reviewCount": 53,
+      "image": "/assets/products/studio-canister.svg",
+      "gallery": [
+        {
+          "title": "Shelf appeal",
+          "body": "A tool that strengthens the store visually even before the customer reads the spec list."
+        },
+        {
+          "title": "Function",
+          "body": "Vacuum twist lid helps preserve freshness while keeping the setup visually clean."
+        }
+      ],
+      "description": "The quiet upsell product: useful, aesthetic, and easy to add from both the cart and product detail flow.",
+      "benefits": [
+        "Raises average order value with minimal cognitive load",
+        "Helps the brand extend from food product to lifestyle object",
+        "Easy to pair with any coffee bag or brew kit"
+      ],
+      "specs": [
+        { "label": "Capacity", "value": "Fits 340 g coffee bag contents" },
+        { "label": "Body", "value": "Powder-coated steel" },
+        { "label": "Seal", "value": "Vacuum-lock lid" },
+        { "label": "Care", "value": "Hand wash recommended" }
+      ],
+      "shippingSnippet": "Ships in a padded rigid box to protect finish quality.",
+      "seoTitle": "Studio Espresso Canister | Solstice Roast",
+      "seoDescription": "A premium countertop coffee canister with vacuum-sealed lid and sculpted finish.",
+      "purchaseModes": [
+        {
+          "id": "one-time",
+          "label": "One-time purchase",
+          "description": "Simple premium add-on with practical everyday use.",
+          "discount": 0
+        }
+      ],
+      "variants": [
+        {
+          "id": "studio-copper-lid",
+          "label": "Copper Lid",
+          "price": 34,
+          "compareAt": 42,
+          "sku": "SR-STU-COP",
+          "inventory": 27
+        },
+        {
+          "id": "studio-black-lid",
+          "label": "Black Lid",
+          "price": 34,
+          "compareAt": 42,
+          "sku": "SR-STU-BLK",
+          "inventory": 22
+        }
+      ],
+      "reviews": [
+        {
+          "name": "Tina",
+          "title": "The kind of accessory I actually add to cart",
+          "body": "It looks refined, feels useful, and the product photography gives it real confidence.",
+          "rating": 5
+        },
+        {
+          "name": "Henry",
+          "title": "Small product, big store impact",
+          "body": "This made the catalog feel more premium and more giftable at the same time.",
+          "rating": 4
+        }
+      ],
+      "relatedIds": ["dawn-pour-over-kit", "eclipse-house-blend", "ember-concentrate"]
+    },
+    {
+      "id": "nightfall-decaf-capsules",
+      "slug": "nightfall-decaf-capsules",
+      "name": "Nightfall Decaf Capsules",
+      "tagline": "Clean decaf pods for late work and slow evenings",
+      "collectionId": "fast-rituals",
+      "type": "Capsules",
+      "vendor": "Solstice Roast",
+      "badges": ["Decaf", "Office Friendly"],
+      "rating": 4.6,
+      "reviewCount": 48,
+      "image": "/assets/products/nightfall-capsules.svg",
+      "gallery": [
+        {
+          "title": "Catalog role",
+          "body": "Adds convenience and time-of-day variety without breaking the premium visual system."
+        },
+        {
+          "title": "Flavor",
+          "body": "Cacao nib, toasted almond, and a clean low-acid finish."
+        }
+      ],
+      "description": "A polished decaf format that expands the catalog into office, evening, and convenience-led use cases while keeping brand tone consistent.",
+      "benefits": [
+        "Supports customers who want speed without abandoning the brand",
+        "Adds a decaf option to make the range feel complete",
+        "Creates a smart small-ticket add-on near checkout"
+      ],
+      "specs": [
+        { "label": "Compatibility", "value": "Original capsule machines" },
+        { "label": "Roast style", "value": "Medium" },
+        { "label": "Flavor notes", "value": "Cacao nib, almond, clean finish" },
+        { "label": "Storage", "value": "Keep cool and dry" }
+      ],
+      "shippingSnippet": "Easy-ship format with flat-rate friendly packaging.",
+      "seoTitle": "Nightfall Decaf Capsules | Solstice Roast",
+      "seoDescription": "Premium decaf capsules for quick evening coffee and office routines.",
+      "purchaseModes": [
+        {
+          "id": "one-time",
+          "label": "One-time purchase",
+          "description": "Fast decaf support for lower-commitment orders.",
+          "discount": 0
+        }
+      ],
+      "variants": [
+        {
+          "id": "nightfall-10",
+          "label": "10 count",
+          "price": 18,
+          "compareAt": 21,
+          "sku": "SR-NGT-10",
+          "inventory": 39
+        },
+        {
+          "id": "nightfall-30",
+          "label": "30 count",
+          "price": 46,
+          "compareAt": 52,
+          "sku": "SR-NGT-30",
+          "inventory": 18
+        }
+      ],
+      "reviews": [
+        {
+          "name": "Sonia",
+          "title": "Finally a decaf option that does not feel like an afterthought",
+          "body": "The finish is clean and the capsule pack makes sense in the overall brand.",
+          "rating": 5
+        },
+        {
+          "name": "Chris",
+          "title": "Great late-night product",
+          "body": "This gives the catalog more range and I like that it still feels visually premium.",
+          "rating": 4
+        }
+      ],
+      "relatedIds": ["ember-concentrate", "eclipse-house-blend", "studio-espresso-canister"]
+    }
+  ]
+}

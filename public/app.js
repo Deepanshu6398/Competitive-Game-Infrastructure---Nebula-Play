@@ -1,251 +1,143 @@
-const state = {
-  tasks: [],
-  filter: "all",
-  loading: true,
+const sampleEvent = {
+  source: "client_A",
+  payload: {
+    metric: "value",
+    amount: "1200",
+    timestamp: "2024/01/01",
+    region: "north",
+  },
 };
 
-const elements = {
-  completedCount: document.querySelector("#completedCount"),
-  emptyState: document.querySelector("#emptyState"),
-  form: document.querySelector("#taskForm"),
-  formMessage: document.querySelector("#formMessage"),
-  loadingState: document.querySelector("#loadingState"),
-  statusMessage: document.querySelector("#statusMessage"),
-  submitButton: document.querySelector("#submitButton"),
-  taskList: document.querySelector("#taskList"),
-  template: document.querySelector("#taskItemTemplate"),
-  titleInput: document.querySelector("#title"),
-  totalCount: document.querySelector("#totalCount"),
-};
+const eventInput = document.querySelector("#event-json");
+const form = document.querySelector("#event-form");
+const simulateFailure = document.querySelector("#simulate-failure");
+const responseOutput = document.querySelector("#response-output");
+const processedList = document.querySelector("#processed-list");
+const rejectedList = document.querySelector("#rejected-list");
+const aggregateList = document.querySelector("#aggregate-list");
+const refreshButton = document.querySelector("#refresh-button");
+const filterClient = document.querySelector("#filter-client");
+const filterFrom = document.querySelector("#filter-from");
+const filterTo = document.querySelector("#filter-to");
 
-document.querySelectorAll(".filter-button").forEach((button) => {
-  button.addEventListener("click", () => {
-    state.filter = button.dataset.filter;
+eventInput.value = JSON.stringify(sampleEvent, null, 2);
 
-    document.querySelectorAll(".filter-button").forEach((item) => {
-      item.classList.toggle("is-active", item === button);
-    });
-
-    render();
-  });
-});
-
-elements.form.addEventListener("submit", async (event) => {
-  event.preventDefault();
-
-  const title = elements.titleInput.value.trim();
-  if (!title) {
-    setFormMessage("Please enter a task title.", true);
-    return;
-  }
-
-  elements.submitButton.disabled = true;
-  setFormMessage("Creating task...", false);
-
-  try {
-    const response = await fetch("/api/tasks", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ title }),
-    });
-
-    const payload = await response.json();
-    if (!response.ok) {
-      throw new Error(payload.error || "Failed to create task.");
-    }
-
-    elements.form.reset();
-    setFormMessage("Task created successfully.", false);
-    setStatusMessage("");
-    await fetchTasks();
-  } catch (error) {
-    setFormMessage(error.message, true);
-  } finally {
-    elements.submitButton.disabled = false;
-  }
-});
-
-function setFormMessage(message, isError) {
-  elements.formMessage.textContent = message;
-  elements.formMessage.style.color = isError ? "var(--danger)" : "var(--muted)";
-}
-
-function setStatusMessage(message, isError = false) {
-  elements.statusMessage.textContent = message;
-  elements.statusMessage.style.color = isError ? "var(--danger)" : "var(--muted)";
+function renderEmpty(target) {
+  target.replaceChildren(document.querySelector("#empty-template").content.cloneNode(true));
 }
 
 function formatDate(value) {
-  const date = new Date(value);
   return new Intl.DateTimeFormat(undefined, {
     dateStyle: "medium",
     timeStyle: "short",
-  }).format(date);
+  }).format(new Date(value));
 }
 
-function getVisibleTasks() {
-  if (state.filter === "completed") {
-    return state.tasks.filter((task) => task.completed);
-  }
+function eventCard(record, mode) {
+  const card = document.createElement("article");
+  card.className = "event-card";
 
-  if (state.filter === "open") {
-    return state.tasks.filter((task) => !task.completed);
-  }
+  const title = document.createElement("strong");
+  title.textContent =
+    mode === "processed"
+      ? `${record.event.client_id} / ${record.event.metric}`
+      : record.errors.join(" ");
 
-  return state.tasks;
+  const meta = document.createElement("span");
+  meta.textContent =
+    mode === "processed"
+      ? `${record.event.amount} at ${formatDate(record.event.timestamp)}`
+      : `Received ${formatDate(record.received_at)}`;
+
+  const fingerprint = document.createElement("code");
+  fingerprint.textContent =
+    mode === "processed" ? record.fingerprint.slice(0, 16) : record.raw_fingerprint.slice(0, 16);
+
+  card.append(title, meta, fingerprint);
+  return card;
 }
 
-function render() {
-  const visibleTasks = getVisibleTasks();
-  const completedCount = state.tasks.filter((task) => task.completed).length;
-
-  elements.totalCount.textContent = String(state.tasks.length);
-  elements.completedCount.textContent = String(completedCount);
-  elements.loadingState.classList.toggle("is-hidden", !state.loading);
-  elements.emptyState.classList.toggle(
-    "is-hidden",
-    state.loading || visibleTasks.length > 0
-  );
-  elements.taskList.innerHTML = "";
-
-  if (state.loading || visibleTasks.length === 0) {
+function renderEvents(records, target, mode) {
+  target.replaceChildren();
+  if (!records.length) {
+    renderEmpty(target);
     return;
   }
 
-  const fragment = document.createDocumentFragment();
-  visibleTasks.forEach((task) => {
-    fragment.append(createTaskElement(task));
-  });
-
-  elements.taskList.append(fragment);
+  for (const record of records) {
+    target.append(eventCard(record, mode));
+  }
 }
 
-function createTaskElement(task) {
-  const item = elements.template.content.firstElementChild.cloneNode(true);
-  const title = item.querySelector(".task-title");
-  const date = item.querySelector(".task-date");
-  const toggle = item.querySelector(".task-toggle");
-  const badge = item.querySelector(".task-badge");
-  const deleteButton = item.querySelector(".delete-button");
-  const editButton = item.querySelector(".edit-button");
-  const editForm = item.querySelector(".edit-form");
-  const editInput = item.querySelector(".edit-input");
-  const cancelButton = item.querySelector(".cancel-button");
+function renderAggregates(rows) {
+  aggregateList.replaceChildren();
+  if (!rows.length) {
+    renderEmpty(aggregateList);
+    return;
+  }
 
-  item.classList.toggle("is-completed", task.completed);
-  title.textContent = task.title;
-  date.textContent = formatDate(task.createdAt);
-  toggle.checked = task.completed;
-  badge.textContent = task.completed ? "Completed" : "Open";
-  editInput.value = task.title;
-
-  toggle.addEventListener("change", async () => {
-    await updateTask(task.id, { completed: toggle.checked }, "Task updated.");
-  });
-
-  deleteButton.addEventListener("click", async () => {
-    deleteButton.disabled = true;
-    setStatusMessage("Deleting task...");
-
-    try {
-      const response = await fetch(`/api/tasks/${task.id}`, {
-        method: "DELETE",
-      });
-      const payload = await response.json();
-
-      if (!response.ok) {
-        throw new Error(payload.error || "Failed to delete task.");
-      }
-
-      setStatusMessage("Task deleted.");
-      await fetchTasks();
-    } catch (error) {
-      deleteButton.disabled = false;
-      setStatusMessage(error.message, true);
-    }
-  });
-
-  editButton.addEventListener("click", () => {
-    editForm.classList.remove("is-hidden");
-    editButton.disabled = true;
-    editInput.focus();
-    editInput.select();
-  });
-
-  cancelButton.addEventListener("click", () => {
-    editForm.classList.add("is-hidden");
-    editButton.disabled = false;
-    editInput.value = task.title;
-  });
-
-  editForm.addEventListener("submit", async (event) => {
-    event.preventDefault();
-    const nextTitle = editInput.value.trim();
-
-    if (!nextTitle) {
-      setStatusMessage("Task title cannot be empty.", true);
-      return;
-    }
-
-    const updated = await updateTask(task.id, { title: nextTitle }, "Task title updated.");
-    if (updated) {
-      editForm.classList.add("is-hidden");
-      editButton.disabled = false;
-    }
-  });
-
-  return item;
+  for (const row of rows) {
+    const item = document.createElement("article");
+    item.className = "aggregate-card";
+    item.innerHTML = `
+      <div>
+        <strong>${row.client_id}</strong>
+        <span>${row.metric}</span>
+      </div>
+      <div>
+        <strong>${row.amount_total.toLocaleString()}</strong>
+        <span>${row.count} event${row.count === 1 ? "" : "s"}</span>
+      </div>
+    `;
+    aggregateList.append(item);
+  }
 }
 
-async function updateTask(taskId, updates, successMessage) {
-  setStatusMessage("Saving changes...");
+function aggregateQuery() {
+  const query = new URLSearchParams();
+  if (filterClient.value.trim()) query.set("client", filterClient.value.trim());
+  if (filterFrom.value) query.set("from", filterFrom.value);
+  if (filterTo.value) query.set("to", filterTo.value);
+  return query.toString();
+}
+
+async function refresh() {
+  const [eventsResponse, aggregateResponse] = await Promise.all([
+    fetch("/api/events"),
+    fetch(`/api/aggregates?${aggregateQuery()}`),
+  ]);
+  const events = await eventsResponse.json();
+  const aggregates = await aggregateResponse.json();
+
+  renderEvents(events.processed_events, processedList, "processed");
+  renderEvents(events.rejected_events, rejectedList, "rejected");
+  renderAggregates(aggregates.results);
+}
+
+form.addEventListener("submit", async (event) => {
+  event.preventDefault();
 
   try {
-    const response = await fetch(`/api/tasks/${taskId}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(updates),
+    const raw = JSON.parse(eventInput.value);
+    const response = await fetch("/api/events", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        event: raw,
+        simulateFailure: simulateFailure.checked,
+      }),
     });
-
-    const payload = await response.json();
-    if (!response.ok) {
-      throw new Error(payload.error || "Failed to update task.");
-    }
-
-    setStatusMessage(successMessage);
-    await fetchTasks();
-    return true;
+    const body = await response.json();
+    responseOutput.textContent = JSON.stringify(body, null, 2);
+    await refresh();
   } catch (error) {
-    setStatusMessage(error.message, true);
-    return false;
+    responseOutput.textContent = error.message;
   }
-}
+});
 
-async function fetchTasks() {
-  state.loading = true;
-  render();
+refreshButton.addEventListener("click", refresh);
+filterClient.addEventListener("input", refresh);
+filterFrom.addEventListener("change", refresh);
+filterTo.addEventListener("change", refresh);
 
-  try {
-    const response = await fetch("/api/tasks");
-    const payload = await response.json();
-
-    if (!response.ok) {
-      throw new Error(payload.error || "Failed to load tasks.");
-    }
-
-    state.tasks = Array.isArray(payload.tasks) ? payload.tasks : [];
-    setStatusMessage("");
-  } catch (error) {
-    state.tasks = [];
-    setStatusMessage(error.message, true);
-  } finally {
-    state.loading = false;
-    render();
-  }
-}
-
-fetchTasks();
+refresh();

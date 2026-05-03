@@ -1,0 +1,156 @@
+{
+  "raw_events": [
+    {
+      "id": "6cf7b09c-791b-4f09-8881-d1447446056c",
+      "received_at": "2026-05-03T05:53:11.201Z",
+      "raw_fingerprint": "c31ad5a5b5115b6eecf29fcb6af41137a2e5f537b576feac5cf47c6ddff96ced",
+      "canonical_fingerprint": "c4013c1c31cac77df9000b869d808f668d5ab0946d026ab2beace980d52f476e",
+      "status": "accepted",
+      "raw": {
+        "source": "client_A",
+        "payload": {
+          "metric": "value",
+          "amount": "1200",
+          "timestamp": "2024/01/01",
+          "region": "north"
+        }
+      }
+    },
+    {
+      "id": "302a7f0b-dabe-4086-90c6-5278752f67f9",
+      "received_at": "2026-05-03T05:53:11.354Z",
+      "raw_fingerprint": "7618574cb780fbaf85289205d7ad79b28e5d0242ae4b3bbef46c2b65b1aebae6",
+      "canonical_fingerprint": "c4013c1c31cac77df9000b869d808f668d5ab0946d026ab2beace980d52f476e",
+      "status": "duplicate",
+      "raw": {
+        "client": "client_A",
+        "data": {
+          "metric_name": "value",
+          "value": 1200,
+          "date": "2024-01-01"
+        }
+      }
+    },
+    {
+      "id": "5d5ef1f4-b5e3-4da6-b415-386df60f7de8",
+      "received_at": "2026-05-03T05:53:40.287Z",
+      "raw_fingerprint": "4e179fc15b45e4417aede61aeb62da9708e0cd72e4422fbe116c50ef1ea26a6e",
+      "canonical_fingerprint": "93c9dd8f4f8ce3e2ceb82e9440a0b6a7a9a66ffbbd2e40abe14789db5f8b6dc7",
+      "status": "accepted",
+      "raw": {
+        "source": "client_A",
+        "payload": {
+          "metric": "api_check_1777787620092",
+          "amount": "1,200",
+          "timestamp": "2024/01/01",
+          "extra": "ok"
+        }
+      }
+    },
+    {
+      "id": "97a8e3c0-0bc1-4ecd-9d13-f80b62d68435",
+      "received_at": "2026-05-03T05:53:40.325Z",
+      "raw_fingerprint": "f90ac60a133c88f39b31557705f44d9e5a54ad7049105b5e889bfefdc77af992",
+      "canonical_fingerprint": "93c9dd8f4f8ce3e2ceb82e9440a0b6a7a9a66ffbbd2e40abe14789db5f8b6dc7",
+      "status": "duplicate",
+      "raw": {
+        "client": "client_A",
+        "data": {
+          "metric_name": "api_check_1777787620092",
+          "value": 1200,
+          "date": "2024-01-01"
+        }
+      }
+    },
+    {
+      "id": "6f68e964-d816-42d2-a570-02de31c047d0",
+      "received_at": "2026-05-03T05:57:35.459Z",
+      "raw_fingerprint": "c31ad5a5b5115b6eecf29fcb6af41137a2e5f537b576feac5cf47c6ddff96ced",
+      "canonical_fingerprint": "c4013c1c31cac77df9000b869d808f668d5ab0946d026ab2beace980d52f476e",
+      "status": "duplicate",
+      "raw": {
+        "source": "client_A",
+        "payload": {
+          "metric": "value",
+          "amount": "1200",
+          "timestamp": "2024/01/01",
+          "region": "north"
+        }
+      }
+    }
+  ],
+  "processed_events": [
+    {
+      "id": "1f4c04d9-730a-4aab-99b4-8da0910b1df4",
+      "processed_at": "2026-05-03T05:53:11.201Z",
+      "fingerprint": "c4013c1c31cac77df9000b869d808f668d5ab0946d026ab2beace980d52f476e",
+      "source_raw_id": "6cf7b09c-791b-4f09-8881-d1447446056c",
+      "schema_version": 1,
+      "event": {
+        "client_id": "client_A",
+        "metric": "value",
+        "amount": 1200,
+        "timestamp": "2024-01-01T00:00:00.000Z"
+      },
+      "normalization_notes": {
+        "ignored_extra_fields": [
+          "region"
+        ]
+      }
+    },
+    {
+      "id": "4a4e7380-0d13-4432-8b53-27826203b7dc",
+      "processed_at": "2026-05-03T05:53:40.287Z",
+      "fingerprint": "93c9dd8f4f8ce3e2ceb82e9440a0b6a7a9a66ffbbd2e40abe14789db5f8b6dc7",
+      "source_raw_id": "5d5ef1f4-b5e3-4da6-b415-386df60f7de8",
+      "schema_version": 1,
+      "event": {
+        "client_id": "client_A",
+        "metric": "api_check_1777787620092",
+        "amount": 1200,
+        "timestamp": "2024-01-01T00:00:00.000Z"
+      },
+      "normalization_notes": {
+        "ignored_extra_fields": [
+          "extra"
+        ]
+      }
+    }
+  ],
+  "rejected_events": [
+    {
+      "id": "ec956b69-b5a6-4e75-a4a5-ad9d74260462",
+      "received_at": "2026-05-03T05:53:11.366Z",
+      "raw_fingerprint": "9926eb681b256bbfb94256643b1d2f6b002da21b730af074d782d079ad36db17",
+      "status": "rejected",
+      "errors": [
+        "Missing or malformed amount.",
+        "Missing or malformed timestamp."
+      ],
+      "raw": {
+        "source": "client_B",
+        "payload": {
+          "metric": "sales",
+          "timestamp": "bad-date"
+        }
+      }
+    },
+    {
+      "id": "60c473f8-af4f-4973-a8f8-3de9f3285c00",
+      "received_at": "2026-05-03T05:53:40.337Z",
+      "raw_fingerprint": "9926eb681b256bbfb94256643b1d2f6b002da21b730af074d782d079ad36db17",
+      "status": "rejected",
+      "errors": [
+        "Missing or malformed amount.",
+        "Missing or malformed timestamp."
+      ],
+      "raw": {
+        "source": "client_B",
+        "payload": {
+          "metric": "sales",
+          "timestamp": "bad-date"
+        }
+      }
+    }
+  ]
+}

@@ -1,107 +1,79 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Task Manager</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Fault-Tolerant Data Processor</title>
     <link rel="stylesheet" href="/styles.css" />
   </head>
   <body>
-    <div class="page-shell">
-      <header class="hero">
+    <main class="shell">
+      <section class="panel submit-panel">
+        <div class="heading-row">
+          <div>
+            <p class="eyebrow">Ingestion Console</p>
+            <h1>Fault-Tolerant Data Processor</h1>
+          </div>
+          <button id="refresh-button" class="icon-button" type="button" title="Refresh results">Refresh</button>
+        </div>
+
+        <form id="event-form">
+          <label for="event-json">Raw event</label>
+          <textarea id="event-json" spellcheck="false"></textarea>
+
+          <div class="form-row">
+            <label class="toggle">
+              <input id="simulate-failure" type="checkbox" />
+              <span>Simulate database failure</span>
+            </label>
+            <button type="submit">Submit Event</button>
+          </div>
+        </form>
+
+        <pre id="response-output" class="response-output" aria-live="polite"></pre>
+      </section>
+
+      <section class="panel filters-panel">
         <div>
-          <p class="eyebrow">Full Stack Assignment</p>
-          <h1>Task Manager</h1>
-          <p class="hero-copy">
-            A small, clean task app with a REST API, loading states, validation,
-            and persistent storage.
-          </p>
+          <p class="eyebrow">Aggregates</p>
+          <h2>Query results</h2>
         </div>
-        <div class="hero-card">
-          <p class="hero-card-label">Live summary</p>
-          <div class="hero-card-stats">
-            <div>
-              <span id="totalCount">0</span>
-              <small>Total tasks</small>
-            </div>
-            <div>
-              <span id="completedCount">0</span>
-              <small>Completed</small>
-            </div>
-          </div>
+        <div class="filter-grid">
+          <label>
+            Client
+            <input id="filter-client" type="text" placeholder="client_A" />
+          </label>
+          <label>
+            From
+            <input id="filter-from" type="date" />
+          </label>
+          <label>
+            To
+            <input id="filter-to" type="date" />
+          </label>
         </div>
-      </header>
+        <div id="aggregate-list" class="aggregate-list"></div>
+      </section>
 
-      <main class="layout">
-        <section class="panel">
-          <h2>Add a task</h2>
-          <form id="taskForm" class="task-form">
-            <label for="title" class="sr-only">Task title</label>
-            <input
-              id="title"
-              name="title"
-              type="text"
-              maxlength="120"
-              placeholder="What needs to get done?"
-              required
-            />
-            <button id="submitButton" type="submit">Create task</button>
-          </form>
-          <p id="formMessage" class="feedback" aria-live="polite"></p>
-        </section>
+      <section class="status-grid">
+        <article class="panel">
+          <p class="eyebrow">Processed</p>
+          <h2>Accepted events</h2>
+          <div id="processed-list" class="event-list"></div>
+        </article>
 
-        <section class="panel">
-          <div class="section-head">
-            <div>
-              <h2>Your tasks</h2>
-              <p class="muted">Create, complete, edit, filter, and delete tasks.</p>
-            </div>
-            <div class="filters" role="tablist" aria-label="Task filters">
-              <button class="filter-button is-active" data-filter="all" type="button">All</button>
-              <button class="filter-button" data-filter="open" type="button">Open</button>
-              <button class="filter-button" data-filter="completed" type="button">Completed</button>
-            </div>
-          </div>
+        <article class="panel">
+          <p class="eyebrow">Rejected / Failed</p>
+          <h2>Rejected events</h2>
+          <div id="rejected-list" class="event-list"></div>
+        </article>
+      </section>
+    </main>
 
-          <p id="statusMessage" class="feedback" aria-live="polite"></p>
-          <div id="loadingState" class="state-card">Loading tasks...</div>
-          <div id="emptyState" class="state-card is-hidden">
-            No tasks here yet. Add your first one above.
-          </div>
-          <ul id="taskList" class="task-list"></ul>
-        </section>
-      </main>
-    </div>
-
-    <template id="taskItemTemplate">
-      <li class="task-item">
-        <label class="task-check">
-          <input class="task-toggle" type="checkbox" />
-          <span class="checkmark"></span>
-        </label>
-        <div class="task-content">
-          <div class="task-row">
-            <p class="task-title"></p>
-            <span class="task-date"></span>
-          </div>
-          <form class="edit-form is-hidden">
-            <input class="edit-input" name="title" type="text" maxlength="120" required />
-            <div class="task-actions">
-              <button class="ghost-button save-button" type="submit">Save</button>
-              <button class="ghost-button cancel-button" type="button">Cancel</button>
-            </div>
-          </form>
-          <div class="task-footer">
-            <span class="task-badge"></span>
-            <div class="task-actions">
-              <button class="ghost-button edit-button" type="button">Edit</button>
-              <button class="danger-button delete-button" type="button">Delete</button>
-            </div>
-          </div>
-        </div>
-      </li>
+    <template id="empty-template">
+      <p class="empty">No records yet.</p>
     </template>
 
     <script src="/app.js"></script>
   </body>
-  </html>
+</html>

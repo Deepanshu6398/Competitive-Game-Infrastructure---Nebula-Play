@@ -1,261 +1,427 @@
+const crypto = require("crypto");
 const http = require("http");
 const fs = require("fs/promises");
 const path = require("path");
-const { randomUUID } = require("crypto");
 
 const PORT = process.env.PORT || 3000;
 const PUBLIC_DIR = path.join(__dirname, "public");
 const DATA_DIR = path.join(__dirname, "data");
-const TASKS_FILE = path.join(DATA_DIR, "tasks.json");
+const STORE_PATH = path.join(DATA_DIR, "events.json");
 
 const MIME_TYPES = {
   ".css": "text/css; charset=utf-8",
   ".html": "text/html; charset=utf-8",
   ".js": "application/javascript; charset=utf-8",
   ".json": "application/json; charset=utf-8",
-  ".svg": "image/svg+xml",
+  ".txt": "text/plain; charset=utf-8",
 };
 
-async function ensureStorage() {
-  await fs.mkdir(DATA_DIR, { recursive: true });
+const DEFAULT_STORE = {
+  raw_events: [],
+  processed_events: [],
+  rejected_events: [],
+};
 
-  try {
-    await fs.access(TASKS_FILE);
-  } catch {
-    await fs.writeFile(TASKS_FILE, "[]", "utf8");
+const NORMALIZATION_CONFIG = {
+  sourceAliases: ["source", "client", "client_id", "clientId", "customer"],
+  payloadAliases: ["payload", "data", "event", "body"],
+  fields: {
+    metric: ["metric", "metric_name", "metricName", "name", "type"],
+    amount: ["amount", "value", "total", "quantity", "qty"],
+    timestamp: ["timestamp", "time", "date", "occurred_at", "occurredAt", "created_at"],
+  },
+};
+
+let writeQueue = Promise.resolve();
+
+function stableStringify(value) {
+  if (Array.isArray(value)) {
+    return `[${value.map(stableStringify).join(",")}]`;
   }
+
+  if (value && typeof value === "object") {
+    return `{${Object.keys(value)
+      .sort()
+      .map((key) => `${JSON.stringify(key)}:${stableStringify(value[key])}`)
+      .join(",")}}`;
+  }
+
+  return JSON.stringify(value);
 }
 
-async function readTasks() {
-  const raw = await fs.readFile(TASKS_FILE, "utf8");
-  return JSON.parse(raw);
+function fingerprint(value) {
+  return crypto.createHash("sha256").update(stableStringify(value)).digest("hex");
 }
 
-async function writeTasks(tasks) {
-  await fs.writeFile(TASKS_FILE, JSON.stringify(tasks, null, 2), "utf8");
+function pickFirst(object, aliases) {
+  if (!object || typeof object !== "object") {
+    return undefined;
+  }
+
+  for (const alias of aliases) {
+    if (Object.prototype.hasOwnProperty.call(object, alias)) {
+      return object[alias];
+    }
+  }
+
+  return undefined;
 }
 
-function sendJson(response, statusCode, payload) {
-  response.writeHead(statusCode, {
-    "Content-Type": "application/json; charset=utf-8",
-  });
-  response.end(JSON.stringify(payload));
+function parseAmount(value) {
+  if (typeof value === "number" && Number.isFinite(value)) {
+    return value;
+  }
+
+  if (typeof value === "string") {
+    const normalized = value.replace(/[$,\s]/g, "");
+    const parsed = Number(normalized);
+    if (Number.isFinite(parsed)) {
+      return parsed;
+    }
+  }
+
+  return null;
 }
 
-function sendText(response, statusCode, payload) {
-  response.writeHead(statusCode, {
-    "Content-Type": "text/plain; charset=utf-8",
-  });
-  response.end(payload);
+function isoDateFromParts(year, month, day) {
+  const date = new Date(Date.UTC(Number(year), Number(month) - 1, Number(day)));
+  if (
+    date.getUTCFullYear() !== Number(year) ||
+    date.getUTCMonth() !== Number(month) - 1 ||
+    date.getUTCDate() !== Number(day)
+  ) {
+    return null;
+  }
+
+  return date.toISOString();
 }
 
-async function readRequestBody(request) {
-  return new Promise((resolve, reject) => {
-    let body = "";
+function parseTimestamp(value) {
+  if (value instanceof Date && !Number.isNaN(value.valueOf())) {
+    return value.toISOString();
+  }
 
-    request.on("data", (chunk) => {
-      body += chunk;
+  if (typeof value !== "string" && typeof value !== "number") {
+    return null;
+  }
 
-      if (body.length > 1_000_000) {
-        reject(new Error("Request body too large."));
-        request.destroy();
-      }
-    });
+  const raw = String(value).trim();
+  const yyyyMmDd = raw.match(/^(\d{4})[/-](\d{1,2})[/-](\d{1,2})$/);
+  if (yyyyMmDd) {
+    const [, year, month, day] = yyyyMmDd;
+    return isoDateFromParts(year, month, day);
+  }
 
-    request.on("end", () => resolve(body));
-    request.on("error", reject);
-  });
+  const ddMmYyyy = raw.match(/^(\d{1,2})[/-](\d{1,2})[/-](\d{4})$/);
+  if (ddMmYyyy) {
+    const [, day, month, year] = ddMmYyyy;
+    return isoDateFromParts(year, month, day);
+  }
+
+  const parsed = new Date(raw);
+  return Number.isNaN(parsed.valueOf()) ? null : parsed.toISOString();
 }
 
-function normalizeTask(task) {
+function normalizeEvent(rawEvent) {
+  const errors = [];
+  const source = pickFirst(rawEvent, NORMALIZATION_CONFIG.sourceAliases);
+  const payload = pickFirst(rawEvent, NORMALIZATION_CONFIG.payloadAliases) || rawEvent;
+
+  const clientId = typeof source === "string" && source.trim() ? source.trim() : null;
+  const metricValue = pickFirst(payload, NORMALIZATION_CONFIG.fields.metric);
+  const metric = typeof metricValue === "string" && metricValue.trim() ? metricValue.trim() : null;
+  const amount = parseAmount(pickFirst(payload, NORMALIZATION_CONFIG.fields.amount));
+  const timestamp = parseTimestamp(pickFirst(payload, NORMALIZATION_CONFIG.fields.timestamp));
+
+  if (!clientId) errors.push("Missing client/source identifier.");
+  if (!metric) errors.push("Missing metric name.");
+  if (amount === null) errors.push("Missing or malformed amount.");
+  if (!timestamp) errors.push("Missing or malformed timestamp.");
+
+  const canonical = {
+    client_id: clientId,
+    metric,
+    amount,
+    timestamp,
+  };
+
   return {
-    id: task.id,
-    title: task.title,
-    completed: Boolean(task.completed),
-    createdAt: task.createdAt,
+    canonical,
+    valid: errors.length === 0,
+    errors,
+    unknown_fields: Object.keys(payload || {}).filter(
+      (key) => !Object.values(NORMALIZATION_CONFIG.fields).some((aliases) => aliases.includes(key)),
+    ),
   };
 }
 
-function validateNewTask(input) {
-  if (!input || typeof input !== "object" || Array.isArray(input)) {
-    return "Request body must be a JSON object.";
-  }
+async function ensureStore() {
+  await fs.mkdir(DATA_DIR, { recursive: true });
 
-  if (typeof input.title !== "string" || !input.title.trim()) {
-    return "title is required and must be a non-empty string.";
+  try {
+    await fs.access(STORE_PATH);
+  } catch {
+    await fs.writeFile(STORE_PATH, JSON.stringify(DEFAULT_STORE, null, 2));
   }
-
-  return null;
 }
 
-function validateTaskUpdate(input) {
-  if (!input || typeof input !== "object" || Array.isArray(input)) {
-    return "Request body must be a JSON object.";
-  }
-
-  const hasTitle = Object.prototype.hasOwnProperty.call(input, "title");
-  const hasCompleted = Object.prototype.hasOwnProperty.call(input, "completed");
-
-  if (!hasTitle && !hasCompleted) {
-    return "Provide at least one field to update: title or completed.";
-  }
-
-  if (hasTitle && (typeof input.title !== "string" || !input.title.trim())) {
-    return "title must be a non-empty string when provided.";
-  }
-
-  if (hasCompleted && typeof input.completed !== "boolean") {
-    return "completed must be a boolean when provided.";
-  }
-
-  return null;
+async function readStore() {
+  await ensureStore();
+  const data = await fs.readFile(STORE_PATH, "utf8");
+  return { ...DEFAULT_STORE, ...JSON.parse(data) };
 }
 
-async function handleApi(request, response, url) {
-  const taskIdMatch = url.pathname.match(/^\/api\/tasks\/([^/]+)$/);
+async function atomicWriteStore(store) {
+  await fs.mkdir(DATA_DIR, { recursive: true });
+  const tempPath = `${STORE_PATH}.${process.pid}.${Date.now()}.tmp`;
+  await fs.writeFile(tempPath, JSON.stringify(store, null, 2));
+  await fs.rename(tempPath, STORE_PATH);
+}
 
-  if (request.method === "GET" && url.pathname === "/api/tasks") {
-    const tasks = await readTasks();
-    return sendJson(response, 200, { tasks });
+function updateStore(mutator) {
+  writeQueue = writeQueue.then(async () => {
+    const store = await readStore();
+    const result = await mutator(store);
+    await atomicWriteStore(store);
+    return result;
+  });
+
+  return writeQueue;
+}
+
+async function readJsonBody(request) {
+  const chunks = [];
+  let size = 0;
+
+  for await (const chunk of request) {
+    size += chunk.length;
+    if (size > 1024 * 1024) {
+      throw Object.assign(new Error("Request body too large."), { statusCode: 413 });
+    }
+    chunks.push(chunk);
   }
 
-  if (request.method === "POST" && url.pathname === "/api/tasks") {
-    const rawBody = await readRequestBody(request);
-    let payload;
+  try {
+    return JSON.parse(Buffer.concat(chunks).toString("utf8") || "{}");
+  } catch {
+    throw Object.assign(new Error("Body must be valid JSON."), { statusCode: 400 });
+  }
+}
 
-    try {
-      payload = JSON.parse(rawBody || "{}");
-    } catch {
-      return sendJson(response, 400, { error: "Request body must be valid JSON." });
-    }
+function sendJson(response, statusCode, body) {
+  response.writeHead(statusCode, {
+    "Content-Type": "application/json; charset=utf-8",
+    "Cache-Control": "no-store",
+  });
+  response.end(JSON.stringify(body, null, 2));
+}
 
-    const validationError = validateNewTask(payload);
+function filterProcessed(events, query) {
+  return events.filter((event) => {
+    if (query.get("client") && event.event.client_id !== query.get("client")) return false;
+    if (query.get("from") && event.event.timestamp < parseTimestamp(query.get("from"))) return false;
+    if (query.get("to") && event.event.timestamp > parseTimestamp(query.get("to"))) return false;
+    return true;
+  });
+}
 
-    if (validationError) {
-      return sendJson(response, 400, { error: validationError });
-    }
+function aggregate(events) {
+  const totals = new Map();
 
-    const tasks = await readTasks();
-    const task = normalizeTask({
-      id: randomUUID(),
-      title: payload.title.trim(),
-      completed: false,
-      createdAt: new Date().toISOString(),
+  for (const record of events) {
+    const key = `${record.event.client_id}::${record.event.metric}`;
+    const current = totals.get(key) || {
+      client_id: record.event.client_id,
+      metric: record.event.metric,
+      count: 0,
+      amount_total: 0,
+    };
+    current.count += 1;
+    current.amount_total += record.event.amount;
+    totals.set(key, current);
+  }
+
+  return [...totals.values()].sort((a, b) =>
+    `${a.client_id}:${a.metric}`.localeCompare(`${b.client_id}:${b.metric}`),
+  );
+}
+
+async function ingestEvent(request, response) {
+  const body = await readJsonBody(request);
+  const rawEvent = body.event || body;
+  const normalized = normalizeEvent(rawEvent);
+  const now = new Date().toISOString();
+  const rawFingerprint = fingerprint(rawEvent);
+  const canonicalFingerprint = fingerprint(normalized.canonical);
+
+  if (body.simulateFailure) {
+    sendJson(response, 503, {
+      status: "failed",
+      retryable: true,
+      message: "Simulated database failure before commit. No counters were updated.",
+      normalized: normalized.canonical,
+      validation_errors: normalized.errors,
     });
-
-    tasks.unshift(task);
-    await writeTasks(tasks);
-
-    return sendJson(response, 201, { task });
-  }
-
-  if (request.method === "PATCH" && taskIdMatch) {
-    const rawBody = await readRequestBody(request);
-    let payload;
-
-    try {
-      payload = JSON.parse(rawBody || "{}");
-    } catch {
-      return sendJson(response, 400, { error: "Request body must be valid JSON." });
-    }
-
-    const validationError = validateTaskUpdate(payload);
-
-    if (validationError) {
-      return sendJson(response, 400, { error: validationError });
-    }
-
-    const tasks = await readTasks();
-    const taskIndex = tasks.findIndex((task) => task.id === taskIdMatch[1]);
-
-    if (taskIndex === -1) {
-      return sendJson(response, 404, { error: "Task not found." });
-    }
-
-    tasks[taskIndex] = normalizeTask({
-      ...tasks[taskIndex],
-      ...(Object.prototype.hasOwnProperty.call(payload, "title")
-        ? { title: payload.title.trim() }
-        : {}),
-      ...(Object.prototype.hasOwnProperty.call(payload, "completed")
-        ? { completed: payload.completed }
-        : {}),
-    });
-
-    await writeTasks(tasks);
-    return sendJson(response, 200, { task: tasks[taskIndex] });
-  }
-
-  if (request.method === "DELETE" && taskIdMatch) {
-    const tasks = await readTasks();
-    const taskIndex = tasks.findIndex((task) => task.id === taskIdMatch[1]);
-
-    if (taskIndex === -1) {
-      return sendJson(response, 404, { error: "Task not found." });
-    }
-
-    const [deletedTask] = tasks.splice(taskIndex, 1);
-    await writeTasks(tasks);
-
-    return sendJson(response, 200, { task: deletedTask });
-  }
-
-  return sendJson(response, 404, { error: "Route not found." });
-}
-
-async function serveStaticFile(response, targetPath) {
-  const resolvedPath = path.resolve(PUBLIC_DIR, targetPath === "/" ? "index.html" : `.${targetPath}`);
-
-  if (!resolvedPath.startsWith(PUBLIC_DIR)) {
-    sendText(response, 403, "Forbidden");
     return;
   }
 
-  try {
-    const file = await fs.readFile(resolvedPath);
-    const extension = path.extname(resolvedPath);
-    response.writeHead(200, {
-      "Content-Type": MIME_TYPES[extension] || "application/octet-stream",
-    });
-    response.end(file);
-  } catch (error) {
-    if (error.code === "ENOENT") {
-      sendText(response, 404, "Not found");
-      return;
+  const result = await updateStore((store) => {
+    const duplicate = store.processed_events.find((event) => event.fingerprint === canonicalFingerprint);
+    if (duplicate) {
+      store.raw_events.push({
+        id: crypto.randomUUID(),
+        received_at: now,
+        raw_fingerprint: rawFingerprint,
+        canonical_fingerprint: canonicalFingerprint,
+        status: "duplicate",
+        raw: rawEvent,
+      });
+      return {
+        statusCode: 200,
+        body: {
+          status: "duplicate",
+          message: "Event already processed; existing result returned without double counting.",
+          processed_event: duplicate,
+        },
+      };
     }
 
-    throw error;
+    if (!normalized.valid) {
+      const rejected = {
+        id: crypto.randomUUID(),
+        received_at: now,
+        raw_fingerprint: rawFingerprint,
+        status: "rejected",
+        errors: normalized.errors,
+        raw: rawEvent,
+      };
+      store.rejected_events.push(rejected);
+      return {
+        statusCode: 422,
+        body: {
+          status: "rejected",
+          errors: normalized.errors,
+          rejected_event: rejected,
+        },
+      };
+    }
+
+    const rawRecord = {
+      id: crypto.randomUUID(),
+      received_at: now,
+      raw_fingerprint: rawFingerprint,
+      canonical_fingerprint: canonicalFingerprint,
+      status: "accepted",
+      raw: rawEvent,
+    };
+    const processedRecord = {
+      id: crypto.randomUUID(),
+      processed_at: now,
+      fingerprint: canonicalFingerprint,
+      source_raw_id: rawRecord.id,
+      schema_version: 1,
+      event: normalized.canonical,
+      normalization_notes: {
+        ignored_extra_fields: normalized.unknown_fields,
+      },
+    };
+
+    store.raw_events.push(rawRecord);
+    store.processed_events.push(processedRecord);
+
+    return {
+      statusCode: 201,
+      body: {
+        status: "accepted",
+        processed_event: processedRecord,
+      },
+    };
+  });
+
+  sendJson(response, result.statusCode, result.body);
+}
+
+async function getState(response) {
+  const store = await readStore();
+  sendJson(response, 200, {
+    raw_events: store.raw_events.slice(-25).reverse(),
+    processed_events: store.processed_events.slice(-25).reverse(),
+    rejected_events: store.rejected_events.slice(-25).reverse(),
+  });
+}
+
+async function getAggregates(url, response) {
+  const store = await readStore();
+  const filtered = filterProcessed(store.processed_events, url.searchParams);
+  sendJson(response, 200, {
+    filters: Object.fromEntries(url.searchParams),
+    results: aggregate(filtered),
+  });
+}
+
+function getFilePath(requestPath) {
+  if (requestPath === "/") {
+    return path.join(PUBLIC_DIR, "index.html");
   }
+
+  const resolvedPath = path.resolve(PUBLIC_DIR, `.${requestPath}`);
+  if (!resolvedPath.startsWith(PUBLIC_DIR)) {
+    return null;
+  }
+
+  return resolvedPath;
+}
+
+async function sendFile(response, filePath, method) {
+  const content = method === "HEAD" ? null : await fs.readFile(filePath);
+  response.writeHead(200, {
+    "Content-Type": MIME_TYPES[path.extname(filePath)] || "application/octet-stream",
+    "Cache-Control": "public, max-age=300",
+  });
+  response.end(content);
 }
 
 const server = http.createServer(async (request, response) => {
-  const url = new URL(request.url, `http://${request.headers.host}`);
-
   try {
-    if (url.pathname.startsWith("/api/")) {
-      await handleApi(request, response, url);
+    const url = new URL(request.url, `http://${request.headers.host}`);
+
+    if (request.method === "POST" && url.pathname === "/api/events") {
+      await ingestEvent(request, response);
       return;
     }
 
-    if (request.method !== "GET") {
+    if (request.method === "GET" && url.pathname === "/api/events") {
+      await getState(response);
+      return;
+    }
+
+    if (request.method === "GET" && url.pathname === "/api/aggregates") {
+      await getAggregates(url, response);
+      return;
+    }
+
+    if (request.method !== "GET" && request.method !== "HEAD") {
       sendJson(response, 405, { error: "Method not allowed." });
       return;
     }
 
-    await serveStaticFile(response, url.pathname);
+    const filePath = getFilePath(url.pathname);
+    if (!filePath) {
+      response.writeHead(403, { "Content-Type": "text/plain; charset=utf-8" });
+      response.end("Forbidden");
+      return;
+    }
+
+    await sendFile(response, filePath, request.method);
   } catch (error) {
+    const statusCode = error.statusCode || 500;
     console.error(error);
-    sendJson(response, 500, { error: "Internal server error." });
+    sendJson(response, statusCode, {
+      error: statusCode === 500 ? "Internal server error." : error.message,
+    });
   }
 });
 
-ensureStorage()
-  .then(() => {
-    server.listen(PORT, () => {
-      console.log(`Task Manager running at http://localhost:${PORT}`);
-    });
-  })
-  .catch((error) => {
-    console.error("Failed to start server:", error);
-    process.exitCode = 1;
-  });
+server.listen(PORT, () => {
+  console.log(`Fault-tolerant data processor running at http://localhost:${PORT}`);
+});
