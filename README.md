@@ -2,14 +2,14 @@
 
 Responsive landing page implementation for the provided UI engineering task. The site includes the landing page plus Features, Pricing, About, and Contact pages to show how the design system extends beyond the first screen.
 
-## Run Locally
+# Demo:
 
 ```bash
 npm install
 npm start
 ```
 
-Open `http://localhost:3000`.
+Open: https://competitive-game-infrastructure.vercel.app/
 
 ## Pages
 
