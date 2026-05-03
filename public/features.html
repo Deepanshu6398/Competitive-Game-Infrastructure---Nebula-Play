@@ -3,14 +3,14 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Contact | Nebula Play</title>
+    <title>Features | Nebula Play</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/styles.css" />
     <script src="/app.js" defer></script>
   </head>
-  <body data-page="contact">
+  <body data-page="features">
     <header class="site-header" data-header>
       <a class="brand" href="/index.html"><span class="brand-mark">N</span><span>Nebula Play</span></a>
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-nav-toggle><span></span><span></span></button>
@@ -21,24 +21,16 @@
     <main>
       <section class="page-hero">
         <div class="container split">
-          <div><p class="eyebrow">Contact</p><h1>Plan your next competitive season.</h1></div>
-          <p class="section-copy">Share the shape of your game, launch window, and reward model. This static demo keeps the form client-side for deployment simplicity.</p>
+          <div><p class="eyebrow">Features</p><h1>Everything a live game team needs between match and payout.</h1></div>
+          <p class="section-copy">The system extends the landing-page language into a product view with dense, scannable operational modules.</p>
         </div>
       </section>
       <section class="section">
-        <div class="container contact-layout">
-          <form class="contact-form" data-contact-form>
-            <label>Work email <input required type="email" placeholder="team@studio.com" /></label>
-            <label>Game type <select><option>Competitive multiplayer</option><option>RPG / progression</option><option>Racing / sports</option><option>Community events</option></select></label>
-            <label>Launch notes <textarea required placeholder="Tell us about your season, rewards, and timeline."></textarea></label>
-            <button class="button button-primary" type="submit">Send Request</button>
-            <p class="form-note" data-form-note aria-live="polite"></p>
-          </form>
-          <aside class="contact-card">
-            <h2>What teams ask for</h2>
-            <p>Season setup, quest migration, reward audits, analytics dashboards, and responsive launch pages.</p>
-            <a href="mailto:hello@nebulaplay.example">hello@nebulaplay.example</a>
-          </aside>
+        <div class="container module-grid">
+          <article><span>01</span><h3>Tournament Engine</h3><p>Brackets, leaderboards, squad scoring, eligibility rules, and event timelines.</p></article>
+          <article><span>02</span><h3>Quest Automation</h3><p>Daily tasks, sponsor objectives, streak bonuses, and fraud-resistant claim windows.</p></article>
+          <article><span>03</span><h3>Reward Settlement</h3><p>Configurable payout rails, player receipts, retry-safe processing, and claim logs.</p></article>
+          <article><span>04</span><h3>Launch Analytics</h3><p>Cohort health, conversion funnels, seasonal lift, and live incident signals.</p></article>
         </div>
       </section>
     </main>

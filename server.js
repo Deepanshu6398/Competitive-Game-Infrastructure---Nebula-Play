@@ -364,7 +364,8 @@ function getFilePath(requestPath) {
     return path.join(PUBLIC_DIR, "index.html");
   }
 
-  const resolvedPath = path.resolve(PUBLIC_DIR, `.${requestPath}`);
+  const requestWithExtension = path.extname(requestPath) ? requestPath : `${requestPath}.html`;
+  const resolvedPath = path.resolve(PUBLIC_DIR, `.${requestWithExtension}`);
   if (!resolvedPath.startsWith(PUBLIC_DIR)) {
     return null;
   }
@@ -423,5 +424,5 @@ const server = http.createServer(async (request, response) => {
 });
 
 server.listen(PORT, () => {
-  console.log(`Fault-tolerant data processor running at http://localhost:${PORT}`);
+  console.log(`Nebula Play preview running at http://localhost:${PORT}`);
 });

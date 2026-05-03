@@ -1,8 +1,8 @@
 {
-  "name": "fault-tolerant-data-processor",
+  "name": "nebula-play-landing-page",
   "version": "1.0.0",
   "private": true,
-  "description": "Zero-dependency prototype for unreliable event ingestion, normalization, idempotency, and aggregation.",
+  "description": "Responsive Web3 gaming landing page with supporting product pages.",
   "scripts": {
     "start": "node server.js",
     "check": "node --check server.js"

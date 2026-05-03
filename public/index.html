@@ -3,77 +3,175 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Fault-Tolerant Data Processor</title>
+    <title>Nebula Play | Competitive Game Infrastructure</title>
+    <meta
+      name="description"
+      content="A responsive Web3 gaming landing page with product, pricing, about, and contact pages."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="/styles.css" />
+    <script src="/app.js" defer></script>
   </head>
-  <body>
-    <main class="shell">
-      <section class="panel submit-panel">
-        <div class="heading-row">
+  <body data-page="home">
+    <header class="site-header" data-header>
+      <a class="brand" href="/index.html" aria-label="Nebula Play home">
+        <span class="brand-mark">N</span>
+        <span>Nebula Play</span>
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-nav-toggle>
+        <span></span>
+        <span></span>
+      </button>
+      <nav id="site-nav" class="site-nav" data-nav>
+        <a href="/features.html">Features</a>
+        <a href="/pricing.html">Pricing</a>
+        <a href="/about.html">About</a>
+        <a href="/contact.html">Contact</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <canvas class="hero-canvas" data-orbit-canvas aria-hidden="true"></canvas>
+        <div class="hero-media" aria-hidden="true">
+          <div class="arena-card arena-card-main">
+            <div class="arena-topline">
+              <span>Live Arena</span>
+              <strong>02:48</strong>
+            </div>
+            <div class="arena-map">
+              <i></i><i></i><i></i><i></i><i></i><i></i>
+            </div>
+            <div class="arena-score">
+              <strong>8,412</strong>
+              <span>active players</span>
+            </div>
+          </div>
+          <div class="arena-card arena-card-small">
+            <span>Quest Pool</span>
+            <strong>$128K</strong>
+          </div>
+          <div class="arena-token">XP</div>
+        </div>
+        <div class="container hero-inner">
+          <p class="eyebrow">Layer for player-owned economies</p>
+          <h1>Launch competitive games with rewards players trust.</h1>
+          <p class="hero-copy">
+            Nebula Play gives studios the tournament engine, wallet-light onboarding, quest analytics,
+            and reward rails needed to ship polished multiplayer economies across every screen.
+          </p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="/features.html">Explore Platform</a>
+            <a class="button button-secondary" href="/pricing.html">View Plans</a>
+          </div>
+          <div class="metric-strip" aria-label="Platform metrics">
+            <article>
+              <strong>24 ms</strong>
+              <span>match event latency</span>
+            </article>
+            <article>
+              <strong>8.7M</strong>
+              <span>quests completed</span>
+            </article>
+            <article>
+              <strong>99.98%</strong>
+              <span>reward uptime</span>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-tight">
+        <div class="container logo-row" aria-label="Studio categories">
+          <span>Built for studios</span>
+          <strong>MOBA</strong>
+          <strong>Racing</strong>
+          <strong>RPG</strong>
+          <strong>Esports</strong>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container split">
           <div>
-            <p class="eyebrow">Ingestion Console</p>
-            <h1>Fault-Tolerant Data Processor</h1>
+            <p class="eyebrow">Game operations</p>
+            <h2>One dashboard for matches, seasons, and reward drops.</h2>
           </div>
-          <button id="refresh-button" class="icon-button" type="button" title="Refresh results">Refresh</button>
+          <p class="section-copy">
+            Move from scattered admin tools to a launch-ready command center. Configure events,
+            monitor player cohorts, and audit reward delivery without slowing the live team down.
+          </p>
         </div>
-
-        <form id="event-form">
-          <label for="event-json">Raw event</label>
-          <textarea id="event-json" spellcheck="false"></textarea>
-
-          <div class="form-row">
-            <label class="toggle">
-              <input id="simulate-failure" type="checkbox" />
-              <span>Simulate database failure</span>
-            </label>
-            <button type="submit">Submit Event</button>
-          </div>
-        </form>
-
-        <pre id="response-output" class="response-output" aria-live="polite"></pre>
+        <div class="container feature-grid">
+          <article class="feature-card">
+            <span class="card-number">01</span>
+            <h3>Season Builder</h3>
+            <p>Create ranked ladders, rotating quests, prize pools, and sponsor activations with reusable templates.</p>
+          </article>
+          <article class="feature-card is-highlight">
+            <span class="card-number">02</span>
+            <h3>Reward Guard</h3>
+            <p>Validate achievements, prevent duplicate claims, and settle rewards with transparent player receipts.</p>
+          </article>
+          <article class="feature-card">
+            <span class="card-number">03</span>
+            <h3>Player Graph</h3>
+            <p>Spot churn risk, top squads, completion streaks, and event health from clean operational analytics.</p>
+          </article>
+        </div>
       </section>
 
-      <section class="panel filters-panel">
-        <div>
-          <p class="eyebrow">Aggregates</p>
-          <h2>Query results</h2>
+      <section class="section dark-band">
+        <div class="container showcase">
+          <div>
+            <p class="eyebrow">Responsive by default</p>
+            <h2>Design systems that scale from tournament wallboards to mobile lobbies.</h2>
+            <p>
+              The interface uses fluid grids, compact mobile navigation, stable cards, and predictable stacking
+              so launch pages stay polished on desktop, tablet, and phones.
+            </p>
+          </div>
+          <div class="device-stack" aria-hidden="true">
+            <div class="desktop-device">
+              <span></span>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+            <div class="phone-device">
+              <span></span>
+              <div></div>
+              <div></div>
+            </div>
+          </div>
         </div>
-        <div class="filter-grid">
-          <label>
-            Client
-            <input id="filter-client" type="text" placeholder="client_A" />
-          </label>
-          <label>
-            From
-            <input id="filter-from" type="date" />
-          </label>
-          <label>
-            To
-            <input id="filter-to" type="date" />
-          </label>
-        </div>
-        <div id="aggregate-list" class="aggregate-list"></div>
       </section>
 
-      <section class="status-grid">
-        <article class="panel">
-          <p class="eyebrow">Processed</p>
-          <h2>Accepted events</h2>
-          <div id="processed-list" class="event-list"></div>
-        </article>
-
-        <article class="panel">
-          <p class="eyebrow">Rejected / Failed</p>
-          <h2>Rejected events</h2>
-          <div id="rejected-list" class="event-list"></div>
-        </article>
+      <section class="section">
+        <div class="container cta-panel">
+          <p class="eyebrow">Ready for production teams</p>
+          <h2>Bring your next season online with a launch page, product story, and plan structure already in place.</h2>
+          <a class="button button-primary" href="/contact.html">Talk to Sales</a>
+        </div>
       </section>
     </main>
 
-    <template id="empty-template">
-      <p class="empty">No records yet.</p>
-    </template>
-
-    <script src="/app.js"></script>
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <a class="brand" href="/index.html"><span class="brand-mark">N</span><span>Nebula Play</span></a>
+        <p>Competitive game infrastructure for player-owned economies.</p>
+        <nav>
+          <a href="/features.html">Features</a>
+          <a href="/pricing.html">Pricing</a>
+          <a href="/about.html">About</a>
+          <a href="/contact.html">Contact</a>
+        </nav>
+      </div>
+    </footer>
   </body>
 </html>

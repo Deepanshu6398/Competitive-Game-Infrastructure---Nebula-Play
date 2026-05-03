@@ -3,14 +3,14 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Contact | Nebula Play</title>
+    <title>Pricing | Nebula Play</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/styles.css" />
     <script src="/app.js" defer></script>
   </head>
-  <body data-page="contact">
+  <body data-page="pricing">
     <header class="site-header" data-header>
       <a class="brand" href="/index.html"><span class="brand-mark">N</span><span>Nebula Play</span></a>
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-nav-toggle><span></span><span></span></button>
@@ -21,24 +21,15 @@
     <main>
       <section class="page-hero">
         <div class="container split">
-          <div><p class="eyebrow">Contact</p><h1>Plan your next competitive season.</h1></div>
-          <p class="section-copy">Share the shape of your game, launch window, and reward model. This static demo keeps the form client-side for deployment simplicity.</p>
+          <div><p class="eyebrow">Pricing</p><h1>Plans for prototype leagues through global seasons.</h1></div>
+          <p class="section-copy">Pricing cards reuse the same compact card geometry, accent color, and CTA treatment from the landing page.</p>
         </div>
       </section>
       <section class="section">
-        <div class="container contact-layout">
-          <form class="contact-form" data-contact-form>
-            <label>Work email <input required type="email" placeholder="team@studio.com" /></label>
-            <label>Game type <select><option>Competitive multiplayer</option><option>RPG / progression</option><option>Racing / sports</option><option>Community events</option></select></label>
-            <label>Launch notes <textarea required placeholder="Tell us about your season, rewards, and timeline."></textarea></label>
-            <button class="button button-primary" type="submit">Send Request</button>
-            <p class="form-note" data-form-note aria-live="polite"></p>
-          </form>
-          <aside class="contact-card">
-            <h2>What teams ask for</h2>
-            <p>Season setup, quest migration, reward audits, analytics dashboards, and responsive launch pages.</p>
-            <a href="mailto:hello@nebulaplay.example">hello@nebulaplay.example</a>
-          </aside>
+        <div class="container pricing-grid">
+          <article class="price-card"><h3>Launch</h3><strong>$199</strong><span>/ month</span><p>For pilots, small tournaments, and first reward experiments.</p><a class="button button-secondary" href="/contact.html">Start Launch</a></article>
+          <article class="price-card featured"><h3>Season</h3><strong>$799</strong><span>/ month</span><p>For active game teams running quests, ladders, and reward drops.</p><a class="button button-primary" href="/contact.html">Choose Season</a></article>
+          <article class="price-card"><h3>Enterprise</h3><strong>Custom</strong><span>annual</span><p>For publishers needing dedicated support, compliance workflows, and scale planning.</p><a class="button button-secondary" href="/contact.html">Contact Us</a></article>
         </div>
       </section>
     </main>
